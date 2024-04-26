@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const request =require('request')
 const bodyParser=require('body-parser')
@@ -12,6 +13,8 @@ const encrypt = require("mongoose-encryption");
 // db.connect();
 mongoose.connect("mongodb://localhost:27017/test_dev");
 const app = express()
+
+// console.log(process.env.API_KEY)
 const port = 3300
 app.use(express.static("public"))
 app.use(bodyParser.urlencoded({extended: true}))
@@ -36,8 +39,8 @@ app.get('/login',(req,res) =>{
   });
 
 //let listuser=[];
-const secret = "Thisisourlittlesecret";
-userSchema.plugin(encrypt,{secret:secret,encryptedFields:['newpassword']})
+
+// userSchema.plugin(encrypt,{secret:process.env.SECRET,encryptedFields:['newpassword']})
 const user = mongoose.model("user", userSchema);
 // app.get('/', (req, res) => {
 //   user.find({}, function(err, list){
